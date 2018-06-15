@@ -701,7 +701,7 @@ public class MavenProject
     public void setArtifacts( Set<Artifact> artifacts )
     {
         log( "setArtifacts(): " + artifacts );
-        log( "Logging access to setArtifacts: " + ExceptionUtils.getStackTrace( new Throwable( "Who are you?" ) ) );
+        log( "Logging access to setArtifacts(): " + ExceptionUtils.getStackTrace( new Throwable( "Who are you?" ) ) );
         this.artifacts = artifacts;
 
         // flush the calculated artifactMap
@@ -725,7 +725,9 @@ public class MavenProject
             {
                 artifacts = new LinkedHashSet<>();
                 log( "Set artifacts to empty set due to null artifactFilter or resolvedArtifacts: " + artifactFilter
-                        + " - " + resolvedArtifacts );
+                        + " - " + ( resolvedArtifacts != null ? resolvedArtifacts.size() + " elements " : "null" ) );
+                log( "Logging access to getArtifacts(): " + ExceptionUtils.getStackTrace(
+                        new Throwable( "Is that you?" ) ) );
             }
             else
             {
