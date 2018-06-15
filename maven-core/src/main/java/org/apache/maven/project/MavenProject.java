@@ -688,18 +688,20 @@ public class MavenProject
 
     private Log log = new SystemStreamLog();
 
-    private void log(String message) {
-        final String logIfArtifactId = System.getenv().get("LOG_ARTIFACT_ID");
+    private void log( String message )
+    {
+        final String logIfArtifactId = System.getenv().get( "LOG_ARTIFACT_ID" );
         final String artifactId = getModel() != null && getArtifactId() != null ? getArtifactId() : "unknown";
-        if (artifactId.equals(logIfArtifactId)) {
-            log.info(artifactId + " " + message);
+        if ( artifactId.equals( logIfArtifactId ) )
+        {
+            log.info( artifactId + " " + message );
         }
     }
 
     public void setArtifacts( Set<Artifact> artifacts )
     {
-        log("setArtifacts(): " + artifacts);
-        log("Logging access to setArtifacts: " + ExceptionUtils.getStackTrace(new Throwable("Who are you?")));
+        log( "setArtifacts(): " + artifacts );
+        log( "Logging access to setArtifacts: " + ExceptionUtils.getStackTrace( new Throwable( "Who are you?" ) ) );
         this.artifacts = artifacts;
 
         // flush the calculated artifactMap
@@ -722,7 +724,8 @@ public class MavenProject
             if ( artifactFilter == null || resolvedArtifacts == null )
             {
                 artifacts = new LinkedHashSet<>();
-                log("Set artifacts to empty set due to null artifactFilter or resolvedArtifacts: " + artifactFilter + " - " + resolvedArtifacts);
+                log( "Set artifacts to empty set due to null artifactFilter or resolvedArtifacts: " + artifactFilter
+                        + " - " + resolvedArtifacts );
             }
             else
             {
@@ -734,7 +737,8 @@ public class MavenProject
                         artifacts.add( artifact );
                     }
                 }
-                log("Populated artifacts based on artifactFilter and resolvedArtifacts: " + resolvedArtifacts.size() + " -> " + artifacts.size() + " elements");
+                log( "Populated artifacts based on artifactFilter and resolvedArtifacts: " + resolvedArtifacts.size()
+                        + " -> " + artifacts.size() + " elements" );
             }
         }
         return artifacts;
