@@ -742,6 +742,7 @@ public class MavenProject
                 log( "Populated artifacts based on artifactFilter and resolvedArtifacts: " + resolvedArtifacts.size()
                         + " -> " + artifacts.size() + " elements" );
             }
+            log( "project.hashCode(): " + System.identityHashCode( this ) );
             log( "artifacts.hashCode(): " + System.identityHashCode( artifacts ) );
         }
         return artifacts;
