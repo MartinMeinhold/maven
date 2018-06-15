@@ -690,7 +690,7 @@ public class MavenProject
 
     private void log(String message) {
         final String logIfArtifactId = System.getProperty("log.artifactId", "");
-        final String artifactId = getArtifactId() != null ? getArtifactId() : "unknown";
+        final String artifactId = getModel() != null && getArtifactId() != null ? getArtifactId() : "unknown";
         if (artifactId.equals(logIfArtifactId)) {
             log.info(artifactId + " " + message);
         }
