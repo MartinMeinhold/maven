@@ -32,6 +32,7 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.maven.RepositoryUtils;
 import org.apache.maven.artifact.Artifact;
 import org.apache.maven.artifact.ArtifactUtils;
@@ -65,6 +66,8 @@ import org.apache.maven.model.Repository;
 import org.apache.maven.model.Resource;
 import org.apache.maven.model.Scm;
 import org.apache.maven.model.io.xpp3.MavenXpp3Writer;
+import org.apache.maven.plugin.logging.Log;
+import org.apache.maven.plugin.logging.SystemStreamLog;
 import org.apache.maven.project.artifact.InvalidDependencyVersionException;
 import org.apache.maven.project.artifact.MavenMetadataSource;
 import org.codehaus.plexus.classworlds.realm.ClassRealm;
@@ -683,8 +686,20 @@ public class MavenProject
         getModel().addLicense( license );
     }
 
+    private Log log = new SystemStreamLog();
+
+    private void log(String message) {
+        final String logIfArtifactId = System.getProperty("log.artifactId", "");
+        final String artifactId = getArtifactId() != null ? getArtifactId() : "unknown";
+        if (artifactId.equals(logIfArtifactId)) {
+            log.info(artifactId + " " + message);
+        }
+    }
+
     public void setArtifacts( Set<Artifact> artifacts )
     {
+        log("setArtifacts(): " + artifacts);
+        log("Logging access to setArtifacts: " + ExceptionUtils.getStackTrace(new Throwable("Who are you?")));
         this.artifacts = artifacts;
 
         // flush the calculated artifactMap
@@ -701,11 +716,13 @@ public class MavenProject
      */
     public Set<Artifact> getArtifacts()
     {
+
         if ( artifacts == null )
         {
             if ( artifactFilter == null || resolvedArtifacts == null )
             {
                 artifacts = new LinkedHashSet<>();
+                log("Set artifacts to empty set due to null artifactFilter or resolvedArtifacts: " + artifactFilter + " - " + resolvedArtifacts)
             }
             else
             {
@@ -717,6 +734,7 @@ public class MavenProject
                         artifacts.add( artifact );
                     }
                 }
+                log("Populated artifacts based on artifactFilter and resolvedArtifacts: " + resolvedArtifacts.size() + " -> " + artifacts.size() + " elements");
             }
         }
         return artifacts;
