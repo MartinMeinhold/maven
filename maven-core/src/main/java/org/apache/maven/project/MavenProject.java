@@ -689,7 +689,7 @@ public class MavenProject
     private Log log = new SystemStreamLog();
 
     private void log(String message) {
-        final String logIfArtifactId = System.getenv().getOrDefault("LOG_ARTIFACT_ID", "");
+        final String logIfArtifactId = System.getenv().get("LOG_ARTIFACT_ID");
         final String artifactId = getModel() != null && getArtifactId() != null ? getArtifactId() : "unknown";
         if (artifactId.equals(logIfArtifactId)) {
             log.info(artifactId + " " + message);
