@@ -722,7 +722,7 @@ public class MavenProject
             if ( artifactFilter == null || resolvedArtifacts == null )
             {
                 artifacts = new LinkedHashSet<>();
-                log("Set artifacts to empty set due to null artifactFilter or resolvedArtifacts: " + artifactFilter + " - " + resolvedArtifacts)
+                log("Set artifacts to empty set due to null artifactFilter or resolvedArtifacts: " + artifactFilter + " - " + resolvedArtifacts);
             }
             else
             {
