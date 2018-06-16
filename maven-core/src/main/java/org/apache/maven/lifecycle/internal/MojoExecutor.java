@@ -277,7 +277,7 @@ public class MojoExecutor
         for ( MavenProject projectToResolve : projectsToResolve )
         {
             log( projectToResolve, "Thread " + Thread.currentThread().getName() + " executing via mojo "
-                    + mojoDescriptor.getId() );
+                    + mojoDescriptor.getId() + " to build " + project.getArtifactId() );
             projectToResolve.setArtifactFilter( artifactFilter );
         }
     }
