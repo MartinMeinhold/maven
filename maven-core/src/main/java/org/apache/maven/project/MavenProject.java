@@ -1455,7 +1455,8 @@ public class MavenProject
      */
     public void setArtifactFilter( ArtifactFilter artifactFilter )
     {
-        log( "Logging access to setArtifactFilter() with artifactFilter: " + artifactFilter + " - "
+        log( "Logging access from thread " + Thread.currentThread().getName() + " to setArtifactFilter() with "
+                + "artifactFilter: " + artifactFilter + " - "
                 + ExceptionUtils.getStackTrace( new Throwable( "Show yourself!" ) ) );
         this.artifactFilter = artifactFilter;
         this.artifacts = null;

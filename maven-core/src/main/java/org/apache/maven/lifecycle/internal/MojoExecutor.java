@@ -35,6 +35,8 @@ import org.apache.maven.plugin.PluginConfigurationException;
 import org.apache.maven.plugin.PluginIncompatibleException;
 import org.apache.maven.plugin.PluginManagerException;
 import org.apache.maven.plugin.descriptor.MojoDescriptor;
+import org.apache.maven.plugin.logging.Log;
+import org.apache.maven.plugin.logging.SystemStreamLog;
 import org.apache.maven.project.MavenProject;
 import org.codehaus.plexus.component.annotations.Component;
 import org.codehaus.plexus.component.annotations.Requirement;
@@ -274,7 +276,21 @@ public class MojoExecutor
                                                      mojoDescriptor.isAggregator() );
         for ( MavenProject projectToResolve : projectsToResolve )
         {
+            log( projectToResolve, "Thread " + Thread.currentThread().getName() + " executing via mojo "
+                    + mojoDescriptor.getId() );
             projectToResolve.setArtifactFilter( artifactFilter );
+        }
+    }
+
+    private Log log = new SystemStreamLog();
+
+    private void log( MavenProject project, String message )
+    {
+        final String logIfArtifactId = System.getenv().get( "LOG_ARTIFACT_ID" );
+        final String artifactId = project.getArtifactId() != null ? project.getArtifactId() : "unknown";
+        if ( artifactId.equals( logIfArtifactId ) )
+        {
+            log.info( artifactId + " " + message );
         }
     }
 
